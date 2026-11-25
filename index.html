@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURELIA MALL | Official Luxury Marketplace & Private Wealth Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            obsidian: '#08090D',
+            charcoal: '#11131A',
+            slatecard: '#171A24',
+            silver: '#E2E8F0',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #08090D;
+      color: #F8FAFC;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #08090D;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #262B38;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+    .glass-nav {
+      background: rgba(8, 9, 13, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .luxury-border {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-slate-200 selection:text-slate-950">
+
+  <!-- Top Utility Bar -->
+  <div class="bg-[#050608] border-b border-white/5 text-[11px] text-slate-400 py-1.5 px-4 hidden sm:block">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <span class="flex items-center gap-1.5 text-slate-200 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          Aurelia Priority Concierge 24/7
+        </span>
+        <span>•</span>
+        <span>Asuransi Pengiriman Global Terjamin</span>
+        <span>•</span>
+        <span>Sertifikat Keaslian Internasional</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button onclick="openOrdersModal()" class="hover:text-white transition">Lacak Pesanan</button>
+        <span>|</span>
+        <span class="text-slate-300 font-medium">Member Tier: <span class="text-amber-300 font-semibold">VVIP Sovereign</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Sticky Header -->
+  <header class="sticky top-0 z-40 glass-nav border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 py-3.5">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        
+        <!-- Brand Logo -->
+        <a href="#" onclick="resetFilters(); return false;" class="flex items-center gap-2.5 group shrink-0">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-100 via-slate-300 to-slate-500 flex items-center justify-center shadow-lg shadow-white/5 group-hover:scale-105 transition">
+            <svg class="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-lg font-extrabold tracking-widest text-white">AURELIA</span>
+              <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-white/10 text-slate-200 border border-white/15">MALL</span>
+            </div>
+            <p class="text-[10px] text-slate-400 -mt-0.5 hidden sm:block">Luxury & Sovereign Assets</p>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="order-3 md:order-2 w-full md:flex-1 md:max-w-xl">
+          <div class="relative flex items-center">
+            <input 
+              type="text" 
+              id="searchInput"
+              oninput="handleSearch()"
+              placeholder="Cari dari 100 koleksi: Bugatti, Pulau Pribadi, Richard Mille, Jet Pribadi..." 
+              class="w-full bg-[#13161F] text-sm text-white placeholder-slate-500 pl-4 pr-12 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:border-slate-400 transition"
+            />
+            <button onclick="handleSearch()" class="absolute right-1.5 bg-slate-100 hover:bg-white text-slate-950 p-2 rounded-lg transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- VeloPay Wallet & Orders -->
+        <div class="order-2 md:order-3 flex items-center gap-2.5">
+          <!-- Wallet Pill -->
+          <div class="flex items-center bg-[#13161F] border border-white/10 rounded-xl p-1.5 pl-3 gap-3 shadow-lg">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">VeloPay</span>
+                <span id="shortBalanceBadge" class="text-[10px] font-bold text-slate-200 bg-white/10 px-1.5 rounded">Rp 0</span>
+              </div>
+              <span id="walletBalanceDisplay" class="text-xs sm:text-sm font-bold text-white tracking-tight truncate max-w-[130px] sm:max-w-[210px]">
+                Rp 0
+              </span>
+            </div>
+            <button 
+              onclick="openTopUpModal()" 
+              class="bg-slate-100 hover:bg-white active:scale-95 text-slate-950 text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1 shrink-0"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span>Top Up</span>
+            </button>
+          </div>
+
+          <!-- Orders History Button -->
+          <button 
+            onclick="openOrdersModal()" 
+            class="relative bg-[#13161F] hover:bg-slate-800 border border-white/10 p-2.5 rounded-xl text-slate-300 hover:text-white transition"
+            title="Pesanan Saya"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <span id="orderCountBadge" class="hidden absolute -top-1.5 -right-1.5 bg-slate-100 text-slate-950 text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#08090D]">0</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
+
+    <!-- Hero Promo Banner -->
+    <section class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#101219] via-[#161923] to-[#0D0F15] border border-white/10 p-6 sm:p-8">
+      <div class="absolute -right-16 -top-16 w-80 h-80 bg-white/[0.03] rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute right-12 bottom-0 w-56 h-56 bg-slate-400/[0.04] rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2.5 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-slate-200 text-xs font-semibold">
+            <span>⚡ VeloPay Priority Deposit Aktif</span>
+            <span>•</span>
+            <span>Biaya Admin: Rp 0 (VVIP Tier)</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            100 Koleksi Aset Mewah, Supercar & Properti Eksklusif Dunia
+          </h1>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Transaksi instan berlimit tinggi hingga <span class="text-white font-semibold">Rp 100 Triliun</span> dengan perlindungan escrow resmi dan pengiriman prioritas ke seluruh wilayah Indonesia & Internasional.
+          </p>
+        </div>
+        <div class="flex flex-wrap sm:flex-nowrap gap-3 shrink-0">
+          <button onclick="openTopUpModal()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-100 text-slate-950 font-bold text-sm hover:bg-white transition shadow-lg">
+            + Isi Saldo VeloPay
+          </button>
+          <button onclick="document.getElementById('catalogSection').scrollIntoView({behavior:'smooth'})" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold text-sm border border-white/10 transition">
+            Lihat 100 Katalog
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Filter Pills & Sort -->
+    <section id="catalogSection" class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-white">Katalog Resmi Aurelia Mall</h2>
+          <span id="productCounter" class="text-xs text-slate-400">Menampilkan 100 produk eksklusif</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="sortSelect" class="text-xs text-slate-400 hidden sm:inline">Urutkan:</label>
+          <select id="sortSelect" onchange="handleSort()" class="bg-[#13161F] text-xs text-slate-200 border border-white/10 rounded-xl px-3 py-2 focus:outline-none focus:border-slate-400">
+            <option value="default">Rekomendasi VVIP</option>
+            <option value="price-asc">Harga: Terendah ke Tertinggi</option>
+            <option value="price-desc">Harga: Tertinggi ke Terendah</option>
+            <option value="sold-desc">Terlaris</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="categoryContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section>
+      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Empty Search State -->
+      <div id="emptyState" class="hidden text-center py-16 bg-[#11131A] rounded-2xl border border-white/10">
+        <p class="text-slate-200 font-semibold text-base">Produk tidak ditemukan</p>
+        <p class="text-slate-500 text-sm mt-1">Coba gunakan kata kunci lain atau pilih kategori Semua.</p>
+        <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-white/10 text-white border border-white/15 rounded-xl text-xs font-semibold hover:bg-white/15 transition">
+          Reset Pencarian
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-[#050608] mt-12 py-8 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-white tracking-wider">AURELIA MALL</span>
+        <span>© 2026 PT Aurelia Global Luxury Indonesia. Terdaftar & Diawasi Otoritas Perdagangan Internasional.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>VeloPay Protected</span>
+        <span>•</span>
+        <span>Escrow Verified</span>
+        <span>•</span>
+        <span>24/7 Concierge</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAL 1: TOP UP VELOPAY ==================== -->
+  <div id="topUpModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4">
+    <div class="bg-[#11131A] border border-white/15 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#151821]">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-lg font-bold text-white">Top Up Saldo VeloPay</h3>
+            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-white/10 text-slate-200 border border-white/15">Instant Bank Transfer</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">Saldo saat ini: <span id="modalCurrentBalance" class="text-white font-semibold">Rp 0</span></p>
+        </div>
+        <button onclick="closeTopUpModal()" class="p-2 rounded-xl bg-white/5 text-slate-400 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-5 flex-1">
+        <!-- Recommendation Banner (Shown when redirected from insufficient balance) -->
+        <div id="topUpRecommendationBox" class="hidden p-3.5 rounded-xl bg-amber-500/10 border border-amber-400/30 flex items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-semibold text-amber-300">Rekomendasi Top Up untuk Checkout</p>
+            <p id="topUpRecommendationText" class="text-xs text-slate-300 mt-0.5">Kekurangan saldo: Rp 0</p>
+          </div>
+          <button id="applyRecommendedTopUpBtn" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-white text-slate-950 text-xs font-bold shrink-0 transition">
+            Pilih Otomatis
+          </button>
+        </div>
+
+        <!-- Nominal Grid -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Pilih Nominal Pengisian Saldo</label>
+          <div id="nominalGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="bg-[#161923] border border-white/10 rounded-xl p-4">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Metode Pengisian</label>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-[#11131A] border border-white/20">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-white/10 text-slate-100 flex items-center justify-center font-bold text-xs shrink-0">
+                VVIP
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-white">VeloPay Priority Deposit / Instant Bank Transfer</p>
+                <p class="text-xs text-slate-400">Otorisasi langsung • Kliring real-time</p>
+              </div>
+            </div>
+            <div class="sm:text-right">
+              <span class="inline-block text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                Biaya Admin: Rp 0 (VVIP Tier)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-white/10 bg-[#151821] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="w-full sm:w-auto">
+          <p class="text-[11px] text-slate-400">Nominal Dipilih</p>
+          <p id="selectedTopUpDisplay" class="text-base font-extrabold text-white">Rp 0</p>
+        </div>
+        <button 
+          id="confirmTopUpBtn" 
+          onclick="executeTopUp()" 
+          disabled
+          class="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 disabled:bg-slate-800 disabled:text-slate-500 hover:bg-white text-slate-950 font-bold text-sm transition flex items-center justify-center gap-2"
+        >
+          <span id="topUpBtnText">Pilih Nominal Terlebih Dahulu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: CHECKOUT & DETAIL ==================== -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4">
+    <div class="bg-[#11131A] border border-white/15 rounded-2xl w-full max-w-lg max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#151821]">
+        <h3 class="text-base font-bold text-white">Konfirmasi Pembelian</h3>
+        <button onclick="closeCheckoutModal()" class="p-1.5 rounded-lg bg-white/5 text-slate-400 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div id="checkoutBody" class="p-6 overflow-y-auto space-y-4">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Footer -->
+      <div id="checkoutFooter" class="px-6 py-4 border-t border-white/10 bg-[#151821]">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: DIGITAL INVOICE / RECEIPT ==================== -->
+  <div id="receiptModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-md p-4">
+    <div class="bg-[#11131A] border border-emerald-500/40 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+      <div class="bg-gradient-to-r from-emerald-950/60 to-slate-900 border-b border-white/10 p-6 text-center">
+        <div class="w-14 h-14 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-400 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <span class="inline-block text-[10px] font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full mb-1.5">
+          BUKTI TRANSAKSI / INVOICE RESMI
+        </span>
+        <h3 class="text-lg font-extrabold text-white">Pembayaran Berhasil</h3>
+        <p class="text-xs text-slate-300 mt-1">Transaksi telah terverifikasi secara otomatis oleh VeloPay Priority</p>
+      </div>
+      <div id="receiptBody" class="p-6 space-y-2.5 text-xs">
+        <!-- Populated dynamically -->
+      </div>
+      <div class="px-6 py-4 bg-[#151821] border-t border-white/10 flex gap-3">
+        <button onclick="closeReceiptModal(); openOrdersModal();" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition">
+          Lihat Pesanan
+        </button>
+        <button onclick="closeReceiptModal()" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-white text-slate-950 font-bold text-xs transition">
+          Selesai
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 4: PESANAN SAYA ==================== -->
+  <div id="ordersModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4">
+    <div class="bg-[#11131A] border border-white/15 rounded-2xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#151821]">
+        <div>
+          <h3 class="text-base font-bold text-white">Riwayat Pesanan & Aset Saya</h3>
+          <p class="text-xs text-slate-400">Daftar transaksi terverifikasi di Aurelia Mall</p>
+        </div>
+        <button onclick="closeOrdersModal()" class="p-1.5 rounded-lg bg-white/5 text-slate-400 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div id="ordersListContainer" class="p-6 overflow-y-auto space-y-3 flex-1">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-[#161923] border border-white/15 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 max-w-sm">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <div>
+        <p id="toastTitle" class="text-xs font-bold text-white">Berhasil</p>
+        <p id="toastMessage" class="text-[11px] text-slate-300 mt-0.5">Saldo berhasil ditambahkan.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== STATE & DATA ====================
+    let walletBalance = 0;
+    let selectedTopUpAmount = 0;
+    let activeCategory = 'Semua';
+    let searchQuery = '';
+    let sortMode = 'default';
+    let orders = [];
+    let currentCheckoutProduct = null;
+    let showNewAddressForm = false;
+
+    // Daftar Alamat Tersimpan (Preset Siap Pilih)
+    let savedAddresses = [
+      {
+        id: 'ADDR-01',
+        label: 'Utama • Penthouse SCBD',
+        recipient: 'Raden Mahendra Wijaya',
+        phone: '+62 811-9880-7712',
+        detail: 'Treasury Tower Lt. 58, District 8 SCBD, Jl. Jend. Sudirman Kav. 52-53, Jakarta Selatan',
+        maskedRegion: 'Indonesia ****************'
+      },
+      {
+        id: 'ADDR-02',
+        label: 'Kediaman • Menteng Residence',
+        recipient: 'Raden Mahendra Wijaya',
+        phone: '+62 811-9880-7712',
+        detail: 'Jl. Teuku Umar No. 42, Menteng, Jakarta Pusat',
+        maskedRegion: 'Indonesia ****************'
+      },
+      {
+        id: 'ADDR-03',
+        label: 'Kantor • Surabaya Private Office',
+        recipient: 'Raden Mahendra Wijaya',
+        phone: '+62 812-3009-4410',
+        detail: 'Pakuwon Tower Lt. 36, Jl. Embong Malang No. 21-31, Surabaya',
+        maskedRegion: 'Indonesia ****************'
+      }
+    ];
+    let selectedAddressId = 'ADDR-01';
+
+    // Daftar Nominal Top Up Lengkap (17 Nominal)
+    const topUpNominals = [
+      { value: 10000, label: 'Rp 10.000', tag: 'Starter' },
+      { value: 100000, label: 'Rp 100.000', tag: 'Basic' },
+      { value: 500000, label: 'Rp 500.000', tag: 'Silver' },
+      { value: 1000000, label: 'Rp 1.000.000', tag: '1 Juta' },
+      { value: 2000000, label: 'Rp 2.000.000', tag: '2 Juta' },
+      { value: 5000000, label: 'Rp 5.000.000', tag: '5 Juta' },
+      { value: 10000000, label: 'Rp 10.000.000', tag: '10 Juta' },
+      { value: 50000000, label: 'Rp 50.000.000', tag: '50 Juta' },
+      { value: 100000000, label: 'Rp 100.000.000', tag: '100 Juta' },
+      { value: 500000000, label: 'Rp 500.000.000', tag: '500 Juta' },
+      { value: 1000000000, label: 'Rp 1.000.000.000', tag: '1 Miliar' },
+      { value: 5000000000, label: 'Rp 5.000.000.000', tag: '5 Miliar' },
+      { value: 10000000000, label: 'Rp 10.000.000.000', tag: '10 Miliar' },
+      { value: 50000000000, label: 'Rp 50.000.000.000', tag: '50 Miliar' },
+      { value: 100000000000, label: 'Rp 100.000.000.000', tag: '100 Miliar' },
+      { value: 1000000000000, label: 'Rp 1.000.000.000.000', tag: '1 Triliun' },
+      { value: 100000000000000, label: 'Rp 100.000.000.000.000', tag: '100 Triliun' }
+    ];
+
+    // Kategori SVG Icons (High-Precision Vector Art)
+    const categoryVisuals = {
+      'Otomotif & Supercar': {
+        gradient: 'from-zinc-900 via-neutral-800 to-zinc-950',
+        accent: 'text-slate-200',
+        svg: `<svg class="w-16 h-16 text-slate-200 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13l2-5.5A2 2 0 016.88 6h10.24a2 2 0 011.88 1.5L21 13M3 13v4a1 1 0 001 1h1a2 2 0 004 0h6a2 2 0 004 0h1a1 1 0 001-1v-4M3 13h18M6.5 16h.01M17.5 16h.01"/></svg>`
+      },
+      'Properti & Pulau Pribadi': {
+        gradient: 'from-slate-900 via-zinc-800 to-neutral-950',
+        accent: 'text-amber-200',
+        svg: `<svg class="w-16 h-16 text-amber-200 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01M9 12h.01M15 12h.01"/></svg>`
+      },
+      'Jam Tangan & Perhiasan': {
+        gradient: 'from-neutral-900 via-stone-800 to-zinc-950',
+        accent: 'text-amber-300',
+        svg: `<svg class="w-16 h-16 text-amber-300 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3l2 1.5M9 3h6l.7 3.2M9 21h6l.7-3.2M8.3 6.2L9 3M8.3 17.8L9 21"/></svg>`
+      },
+      'Gadget & Elektronik Eksklusif': {
+        gradient: 'from-slate-900 via-slate-800 to-zinc-950',
+        accent: 'text-sky-200',
+        svg: `<svg class="w-16 h-16 text-sky-200 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 20h8M12 16v4"/></svg>`
+      },
+      'Pesawat & Yacht': {
+        gradient: 'from-zinc-900 via-slate-800 to-neutral-950',
+        accent: 'text-slate-100',
+        svg: `<svg class="w-16 h-16 text-slate-100 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>`
+      },
+      'Seni & Koleksi Langka': {
+        gradient: 'from-stone-900 via-neutral-800 to-zinc-950',
+        accent: 'text-amber-200',
+        svg: `<svg class="w-16 h-16 text-amber-200 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`
+      },
+      'Fashion Haute Couture': {
+        gradient: 'from-neutral-900 via-zinc-800 to-stone-950',
+        accent: 'text-slate-200',
+        svg: `<svg class="w-16 h-16 text-slate-200 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12l1 13H5L6 7zM9 7V5a3 3 0 016 0v2"/></svg>`
+      },
+      'Mainan & Hobi Sultan': {
+        gradient: 'from-zinc-900 via-neutral-800 to-slate-950',
+        accent: 'text-emerald-200',
+        svg: `<svg class="w-16 h-16 text-emerald-200 drop-shadow" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`
+      }
+    };
+
+    // ==================== KATALOG 100 PRODUK MEWAH & EKSKLUSIF ====================
+    const rawCatalogData = [
+      // 1-14: Otomotif & Supercar (14 produk)
+      ['Bugatti Chiron Super Sport 300+', 'Otomotif & Supercar', 68000000000, 'Bugatti Official Flagship', 'Mall', 5.0, 4, 'Hypercar W16 8.0L Quad-Turbo 1.600 HP edisi terbatas dunia dengan sasis karbon ekspose dan sertifikat pabrik Molsheim.'],
+      ['Rolls-Royce Boat Tail Coachbuild', 'Otomotif & Supercar', 420000000000, 'Rolls-Royce Bespoke', 'VVIP', 5.0, 1, 'Mahakarya coachbuild ultra-langka dengan dek belakang kayu Caleidolegno, dua jam tangan Bovet 1822, dan pendingin sampanye ganda.'],
+      ['Pagani Huayra R Track Edition', 'Otomotif & Supercar', 54000000000, 'Pagani Automobili', 'Mall', 4.9, 3, 'Mesin V12-R naturally aspirated 850 HP berbobot kering 1.050 kg dengan aerodinamika aktif khusus sirkuit internasional.'],
+      ['Koenigsegg Jesko Absolut', 'Otomotif & Supercar', 58500000000, 'Koenigsegg Sweden', 'VVIP', 5.0, 2, 'Megacar tercepat yang pernah dibuat Koenigsegg dengan koefisien drag 0.278 Cd dan transmisi 9-percepatan Light Speed.'],
+      ['Ferrari Daytona SP3 Icona Series', 'Otomotif & Supercar', 45000000000, 'Ferrari Maranello', 'Official Store', 5.0, 6, 'Seri kolektor Icona dengan mesin V12 6.5L mid-rear 840 CV terinspirasi prototipe balap legendaris era 1960-an.'],
+      ['Lamborghini Revuelto V12 HPEV', 'Otomotif & Supercar', 22500000000, 'Lamborghini Jakarta', 'Official Store', 4.9, 14, 'Supercar hybrid plug-in V12 pertama dengan tiga motor listrik menghasilkan tenaga gabungan 1.015 CV.'],
+      ['Mercedes-AMG ONE F1 Hybrid', 'Otomotif & Supercar', 52000000000, 'Mercedes-AMG Private Lounge', 'VVIP', 5.0, 2, 'Teknologi mesin Formula 1 1.6L V6 hybrid jalan raya dengan redline 11.000 RPM dan sistem DRS aktif.'],
+      ['Aston Martin Valkyrie AMR Pro', 'Otomotif & Supercar', 61000000000, 'Aston Martin Q Bespoke', 'Mall', 4.9, 3, 'Hypercar hasil kolaborasi Red Bull Advanced Technologies dengan downforce ekstrem dan kokpit serat karbon penuh.'],
+      ['Porsche 911 GT3 RS Weissach Package', 'Otomotif & Supercar', 12800000000, 'Porsche Centre Official', 'Official Store', 4.9, 27, 'Paket ringan Weissach dengan velg magnesium forged, roll cage karbon, dan sayap belakang DRS otomatis.'],
+      ['McLaren Senna GTR Carbon Edition', 'Otomotif & Supercar', 31000000000, 'McLaren Special Operations', 'Mall', 5.0, 5, 'Edisi penghormatan Ayrton Senna dengan rasio power-to-weight ekstrem dan bodi serat karbon visual.'],
+      ['Bentley Mulliner Batur W12', 'Otomotif & Supercar', 38000000000, 'Bentley Mulliner UK', 'VVIP', 4.9, 4, 'Grand tourer coachbuilt hanya 18 unit di dunia dengan panel interior berlapis emas 18 karat cetak 3D.'],
+      ['Maybach S 680 Haute Voiture', 'Otomotif & Supercar', 9800000000, 'Mercedes-Maybach Official', 'Official Store', 4.9, 19, 'Sedan limusin V12 edisi terbatas dengan interior kain bouclé premium, bantal bulu angsa, dan gelas kristal perak.'],
+      ['Brabus Rocket 1000 G-Class', 'Otomotif & Supercar', 16500000000, 'Brabus Bottrop Official', 'Mall', 4.9, 11, 'SUV performa tinggi 1.000 HP widebody Widestar full carbon dengan interior kulit jahitan tangan.'],
+      ['Gantungan Kunci Titanium Grade-5 AMG', 'Otomotif & Supercar', 95000, 'Mercedes-AMG Accessories', 'Official Store', 4.8, 842, 'Aksesori gantungan kunci presisi CNC berbahan titanium ringan anti-karat dengan ukiran laser autentik.'],
+
+      // 15-27: Properti & Pulau Pribadi (13 produk)
+      ['Pulau Pribadi Anambas Private Atoll (48 Ha)', 'Properti & Pulau Pribadi', 2850000000000, 'Sovereign Island Estates', 'VVIP', 5.0, 1, 'Pulau tropis hak milik penuh dengan laguna biru kristal, 6 vila tepi pantai, dermaga superyacht, dan landasan helikopter pribadi.'],
+      ['Sky Penthouse 3 Lantai SCBD Jakarta (1.450 m²)', 'Properti & Pulau Pribadi', 320000000000, 'Aurelia Prime Realty', 'VVIP', 5.0, 2, 'Penthouse tertinggi di kawasan SCBD dengan infinity pool pribadi, lift ekspres langsung ke unit, dan panorama 360 derajat kota.'],
+      ['Mega Mansion Beverly Hills & Kebun Anggur', 'Properti & Pulau Pribadi', 1450000000000, 'Global Estates International', 'VVIP', 5.0, 1, 'Hunian bergaya modern kontemporer 12 kamar tidur, bioskop IMAX pribadi, bunker bawah tanah, dan garasi pameran 20 mobil.'],
+      ['Kawasan Tanah Komersial Prime Sudirman-SCBD (1 Ha)', 'Properti & Pulau Pribadi', 1850000000000, 'Aurelia Land Holdings', 'Mall', 5.0, 2, 'Lahan strategis zona komersial KLB tinggi berstatus SHGB murni siap bangun gedung pencakar langit ikonik.'],
+      ['Resor Tebing Pribadi Uluwatu Bali (2,5 Ha)', 'Properti & Pulau Pribadi', 640000000000, 'Bali Cliffside Luxury', 'VVIP', 4.9, 3, 'Kompleks 12 vila tebing menghadap Samudra Hindia dengan akses pantai tersembunyi, spa bawah tanah, dan helipad.'],
+      ['Kastil Bersejarah Lembah Loire Prancis (Abad ke-16)', 'Properti & Pulau Pribadi', 920000000000, 'European Heritage Estates', 'VVIP', 5.0, 1, 'Château megah telah direstorasi total dengan lahan hutan pribadi 120 hektar, danau angsa, dan gudang anggur kuno.'],
+      ['Apartemen Duplex Knightsbridge London Hyde Park', 'Properti & Pulau Pribadi', 780000000000, 'London Mayfair Estates', 'Mall', 4.9, 2, 'Hunian mewah menghadap langsung Hyde Park dengan layanan concierge 24 jam, spa privat, dan keamanan diplomatik.'],
+      ['Vila Ski-In/Ski-Out St. Moritz Swiss Alps', 'Properti & Pulau Pribadi', 510000000000, 'Alpine Sovereign Properties', 'VVIP', 5.0, 2, 'Chalet kayu pinus tua dan batu alam Swiss dengan akses langsung ke lereng ski privat serta kolam air panas outdoor.'],
+      ['Kawasan Industri & Pelabuhan Logistik Terpadu (150 Ha)', 'Properti & Pulau Pribadi', 4500000000000, 'Nusantara Infrastructure Corp', 'VVIP', 5.0, 1, 'Kawasan industri strategis lengkap dengan dermaga laut dalam berkapasitas kapal kargo besar dan pembangkit listrik mandiri.'],
+      ['Rumah Mewah Klasik Menteng Ring-1 Jakarta', 'Properti & Pulau Pribadi', 245000000000, 'Menteng Heritage Realty', 'Official Store', 4.9, 4, 'Kediaman prestisius luas tanah 1.800 m² di jalan utama Menteng dengan pilar marmer Italia dan taman tropis rimbun.'],
+      ['Pulau Karang Privat Raja Ampat Sanctuary (32 Ha)', 'Properti & Pulau Pribadi', 3400000000000, 'Pacific Private Islands', 'VVIP', 5.0, 1, 'Surga konservasi laut pribadi dengan terumbu karang perawan, 4 overwater bungalow mewah, dan sistem energi surya mandiri.'],
+      ['Gedung Perkantoran Grade-A 32 Lantai Kuningan', 'Properti & Pulau Pribadi', 2900000000000, 'Aurelia Commercial Tower', 'Mall', 5.0, 1, 'Menara perkantoran bersertifikat Green Building dengan tingkat okupansi tinggi dan sistem manajemen gedung pintar AI.'],
+      ['Kunci Pintar Biometrik Brankas Properti Titan', 'Properti & Pulau Pribadi', 4500000, 'Aurelia Home Security', 'Official Store', 4.8, 128, 'Perangkat keamanan akses pintu brankas dan ruang kerja dengan pemindai sidik jari kapasitif dan enkripsi AES-256.'],
+
+      // 28-41: Jam Tangan & Perhiasan (14 produk)
+      ['Richard Mille RM 56-02 Sapphire Tourbillon', 'Jam Tangan & Perhiasan', 48500000000, 'Richard Mille Geneva', 'VVIP', 5.0, 2, 'Casing terbuat dari blok kristal safir padat transparan yang membutuhkan 1.000 jam pemesinan presisi dengan gerakan kabel suspensi.'],
+      ['Patek Philippe Grandmaster Chime Ref. 6300A', 'Jam Tangan & Perhiasan', 495000000000, 'Patek Philippe Salon', 'VVIP', 5.0, 1, 'Jam tangan Patek Philippe paling rumit dengan 20 komplikasi, dua dial bolak-balik, dan casing baja tahan karat langka.'],
+      ['Jacob & Co. Billionaire Timeless Treasure', 'Jam Tangan & Perhiasan', 315000000000, 'Jacob & Co. Fifth Avenue', 'VVIP', 5.0, 1, 'Bertatahkan 425 berlian kuning Fancy Yellow dan Intense Yellow potongan Asscher seberat total 216,89 karat.'],
+      ['Rolex Cosmograph Daytona Rainbow Everose 18k', 'Jam Tangan & Perhiasan', 9200000000, 'Rolex Official Boutique', 'Official Store', 5.0, 9, 'Emas Everose 18 karat dengan bezel 36 batu safir gradasi pelangi dan indeks jam berlian murni.'],
+      ['Audemars Piguet Royal Oak Concept Black Panther', 'Jam Tangan & Perhiasan', 8400000000, 'Audemars Piguet Le Brassus', 'Mall', 4.9, 7, 'Tourbillon terbang dengan figur ukiran tangan emas putih 18k yang dilukis mikro di atas casing titanium sandblasted.'],
+      ['Kalung Berlian Biru "The Aurelia Star" 45 Karat', 'Jam Tangan & Perhiasan', 680000000000, 'Graff & Aurelia High Jewelry', 'VVIP', 5.0, 1, 'Berlian biru alami langka Tipe IIb potongan pear tanpa cacat internal terpasang pada rantai platinum murni.'],
+      ['Cincin Berlian Pink Argyle 8,2 Karat GIA Certified', 'Jam Tangan & Perhiasan', 185000000000, 'Harry Winston Couture', 'VVIP', 5.0, 2, 'Berlian merah muda alami asal tambang Argyle Australia dengan sertifikat laboratorium GIA dan bingkai platinum.'],
+      ['Vacheron Constantin Les Cabinotiers Celestia', 'Jam Tangan & Perhiasan', 36000000000, 'Vacheron Constantin', 'Mall', 5.0, 2, 'Jam tangan astronomi dengan 23 komplikasi pembacaan waktu sipil, matahari, dan sideris dalam casing emas putih.'],
+      ['Cartier Panther High Jewelry Emerald Bracelet', 'Jam Tangan & Perhiasan', 24500000000, 'Cartier Paris Place Vendôme', 'Official Store', 5.0, 4, 'Gelang ikonik macan kumbang bertatahkan ratusan berlian pavé, mata zamrud Kolombia, dan hidung onyx.'],
+      ['Hublot Big Bang Integrated Tourbillon Full Carbon', 'Jam Tangan & Perhiasan', 3400000000, 'Hublot Nyon Official', 'Official Store', 4.9, 15, 'Konstruksi serat karbon dan Texalium super ringan hanya 68 gram dengan cadangan daya mikro-rotor 72 jam.'],
+      ['Emas Batangan Murni Fine Gold 999.9 (10 Kilogram)', 'Jam Tangan & Perhiasan', 15200000000, 'Aurelia Bullion Vault', 'Official Store', 5.0, 32, 'Sepuluh batang emas murni 1 kg bersertifikat LBMA dengan nomor seri terdaftar dan penyimpanan brankas diasuransikan.'],
+      ['Emas Batangan Murni Fine Gold 999.9 (10 Gram)', 'Jam Tangan & Perhiasan', 15500000, 'Aurelia Bullion Vault', 'Official Store', 4.9, 640, 'Kepingan logam mulia 24 karat berkadar 99,99% dalam kemasan CertiCard anti-pemalsuan.'],
+      ['Kotak Pemutar Jam Otomatis 12 Slot Kulit Buaya', 'Jam Tangan & Perhiasan', 85000000, 'Buben & Zorweg Gallery', 'Mall', 4.9, 41, 'Watch winder presisi asal Jerman dengan kontrol aplikasi, pencahayaan LED lembut, dan kaca anti-peluru.'],
+      ['Kain Pembersih Mikrofiber Emas & Berlian', 'Jam Tangan & Perhiasan', 45000, 'Aurelia Jewelry Care', 'Official Store', 4.8, 1290, 'Kain lembut serat mikro ultra-halus bebas gores untuk merawat kilau jam tangan mewah dan perhiasan berlian.'],
+
+      // 42-54: Gadget & Elektronik Eksklusif (13 produk)
+      ['Caviar iPhone 16 Pro Max Diamond Snowflake 18k', 'Gadget & Elektronik Eksklusif', 8900000000, 'Caviar Royal Gift', 'VVIP', 5.0, 3, 'Bodi berlapis emas putih 18 karat bertatahkan 570 berlian asli dan liontin kepingan salju Graff di bagian tengah.'],
+      ['Sistem Audio Referensi Bang & Olufsen Beolab 90', 'Gadget & Elektronik Eksklusif', 2350000000, 'Bang & Olufsen Flagship', 'Official Store', 5.0, 12, 'Sepasang speaker aktif 8.200 Watt dengan 18 driver Scan-Speak dan teknologi Beam Width Control akustik ruangan.'],
+      ['Televisi MicroLED Lipat C SEED N1 165-Inch Titanium', 'Gadget & Elektronik Eksklusif', 6400000000, 'C SEED Entertainment', 'Mall', 5.0, 4, 'Layar raksasa 165 inci 4K MicroLED yang terlipat rapi menjadi patung kinetik aluminium pesawat saat tidak digunakan.'],
+      ['Hasselblad H6D-400c MS Medium Format Camera', 'Gadget & Elektronik Eksklusif', 780000000, 'Hasselblad Sweden', 'Official Store', 4.9, 18, 'Kamera medium format multi-shot 400 Megapiksel dengan akurasi warna 16-bit untuk fotografi seni dan arsip museum.'],
+      ['Leica M11 Monochrom + Noctilux-M 50mm f/0.95', 'Gadget & Elektronik Eksklusif', 365000000, 'Leica Camera Wetzlar', 'Official Store', 5.0, 29, 'Paket kamera rangefinder legendaris buatan Jerman dengan lensa tercepat di dunia berbukaan f/0.95.'],
+      ['Superkomputer AI Pribadi NVIDIA DGX H200 Node', 'Gadget & Elektronik Eksklusif', 6800000000, 'Aurelia Enterprise Tech', 'Mall', 5.0, 7, 'Infrastruktur komputasi kecerdasan buatan kelas pusat data dengan 8 GPU H200 Tensor Core untuk riset privat.'],
+      ['Vertu Signature V Pure Black Alligator Gold', 'Gadget & Elektronik Eksklusif', 490000000, 'Vertu Concierge UK', 'Mall', 4.8, 22, 'Ponsel rakitan tangan di Inggris dengan layar kristal safir, kulit buaya asli, dan tombol akses layanan concierge 24 jam.'],
+      ['Steinway & Sons Spirio | r Model D Concert Grand', 'Gadget & Elektronik Eksklusif', 4200000000, 'Steinway Gallery Official', 'Official Store', 5.0, 6, 'Piano konser grand tertinggi dengan sistem pemutar otomatis resolusi tinggi dan perekaman ekspresi tuts presisi.'],
+      ['Home Cinema Proyektor Laser Barco Thor 6P RGB', 'Gadget & Elektronik Eksklusif', 5900000000, 'Barco Residential', 'VVIP', 5.0, 3, 'Proyektor bioskop pribadi 6P dual-laser dengan kecerahan 32.000 lumens dan standar DCI 4K profesional.'],
+      ['Kabel Audio Referensi Nordost Odin Gold (2 Meter)', 'Gadget & Elektronik Eksklusif', 620000000, 'Nordost Audiophile', 'Mall', 4.9, 14, 'Kabel interkoneksi berlapis emas murni dengan insulasi FEP presisi tinggi untuk kejernihan sinyal audio tanpa distorsi.'],
+      ['Mac Pro Rack Workstation Full Spec 1.5TB RAM', 'Gadget & Elektronik Eksklusif', 420000000, 'Apple Authorized Pro', 'Official Store', 4.9, 31, 'Workstation profesional dengan penyimpanan SSD 8TB, akselerator grafis penuh, dan sasis baja tahan karat.'],
+      ['Powerbank Titanium MagSafe 10.000mAh Carbon', 'Gadget & Elektronik Eksklusif', 2450000, 'Aurelia Tech Gear', 'Official Store', 4.8, 312, 'Pengisi daya nirkabel magnetik ultra-tipis berbalut serat karbon asli dan bingkai titanium matte.'],
+      ['Kabel Charger Braided Kevlar USB-C 240W', 'Gadget & Elektronik Eksklusif', 350000, 'Aurelia Tech Gear', 'Official Store', 4.9, 980, 'Kabel pengisian cepat berlapis serat Kevlar tahan tarik dengan konektor logam berlapis emas anti-korosi.'],
+
+      // 55-66: Pesawat & Yacht (12 produk)
+      ['Superyacht Lürssen Sovereign 115 Meter Custom', 'Pesawat & Yacht', 6800000000000, 'Lürssen Yachts Germany', 'VVIP', 5.0, 1, 'Mega yacht 6 dek dengan dua helipad, kapal selam mini pribadi, bioskop IMAX, beach club, dan kabin untuk 22 tamu VVIP.'],
+      ['Jet Pribadi Gulfstream G700 Ultra-Long Range', 'Pesawat & Yacht', 1280000000000, 'Gulfstream Aerospace', 'VVIP', 5.0, 2, 'Pesawat jet bisnis terluas di kelasnya dengan 5 zona kabin, kamar tidur master, shower air hangat, dan jangkauan 7.750 mil laut.'],
+      ['Jet Pribadi Bombardier Global 8000 Supersonic-Ready', 'Pesawat & Yacht', 1220000000000, 'Bombardier Business Aircraft', 'VVIP', 5.0, 1, 'Jet jarak jauh tercepat Mach 0.94 dengan sistem pencahayaan sirkadian Soleil dan kualitas udara kabin terendah.'],
+      ['Helikopter VIP Airbus ACH160 Line Lounge', 'Pesawat & Yacht', 265000000000, 'Airbus Corporate Helicopters', 'Mall', 5.0, 3, 'Helikopter generasi terbaru super senyap dengan bilah rotor Blue Edge dan kabin kulit khusus untuk 8 penumpang.'],
+      ['Superyacht Riva 130 Bellissima Italian Edition', 'Pesawat & Yacht', 390000000000, 'Riva Yachts Italy', 'VVIP', 5.0, 2, 'Kapal pesiar flybridge ikonik Italia sepanjang 40 meter dengan dek kayu mahoni mengilap dan jacuzi panorama haluan.'],
+      ['Kapal Selam Pribadi Triton 3300/3 MKII Submersible', 'Pesawat & Yacht', 58000000000, 'Triton Submarines', 'VVIP', 5.0, 2, 'Kapal selam wisata laut dalam berkapasitas 3 orang dengan kubah akrilik transparan 360 derajat hingga kedalaman 1.000 meter.'],
+      ['Jet Pribadi Embraer Praetor 600 Executive', 'Pesawat & Yacht', 340000000000, 'Embraer Executive Jets', 'Official Store', 4.9, 4, 'Jet super-midsize dengan kemampuan terbang nonstop antar benua dan kabin batu alam serta kursi berbaring penuh.'],
+      ['Speedboat Mewah Brabus Shadow 900 Black Ops', 'Pesawat & Yacht', 8900000000, 'Brabus Marine', 'Mall', 4.9, 9, 'Perahu cepat performa tinggi twin-engine 900 HP dengan konsol kemudi serat karbon dan aksen merah khas Brabus.'],
+      ['Personal Flying eVTOL Jetson ONE Carbon', 'Pesawat & Yacht', 1950000000, 'Jetson Aero', 'Mall', 4.8, 16, 'Kendaraan terbang listrik pribadi lepas landas vertikal dengan rangka aluminium-karbon dan kontrol joystick intuitif.'],
+      ['Jet Ski Listrik Narke GT95 Electrojet Carbon', 'Pesawat & Yacht', 920000000, 'Narke Marine', 'Official Store', 4.9, 21, 'Perahu personal listrik bertenaga tinggi berbalut serat karbon penuh tanpa emisi dan suara mesin senyap.'],
+      ['Teropong Laut Stabilizer Gyro Fujinon 14x40', 'Pesawat & Yacht', 24000000, 'Aurelia Marine Optics', 'Official Store', 4.9, 67, 'Teropong binokular tahan air laut dengan penstabil gambar giroskopik aktif untuk navigasi di atas kapal pesiar.'],
+      ['Gantungan Pelampung Kunci Mengapung Neoprene', 'Pesawat & Yacht', 85000, 'Aurelia Marine Gear', 'Official Store', 4.7, 510, 'Gantungan kunci kapal berdaya apung tinggi berwarna kontras agar kunci yacht tidak tenggelam saat terjatuh di dermaga.'],
+
+      // 67-78: Seni & Koleksi Langka (12 produk)
+      ['Stasiun Riset & Wisata Orbit Pribadi "Aurelia One"', 'Seni & Koleksi Langka', 85000000000000, 'Aurelia Orbital Aerospace', 'VVIP', 5.0, 1, 'Modul stasiun luar angkasa komersial pribadi di orbit rendah Bumi lengkap dengan kubah observasi Bumi 360° dan peluncuran roket.'],
+      ['Lukisan Klasik Maestro Eropa Abad ke-17 (Asli)', 'Seni & Koleksi Langka', 1450000000000, 'Aurelia Fine Art Auction', 'VVIP', 5.0, 1, 'Karya cat minyak di atas kanvas terverifikasi kurator internasional lengkap dengan dokumen provenance museum.'],
+      ['Kerangka Fosil Tyrannosaurus Rex Lengkap (67 Juta Tahun)', 'Seni & Koleksi Langka', 520000000000, 'Natural History Sovereign', 'VVIP', 5.0, 1, 'Spesimen fosil asli terawetkan hingga 75% kelengkapan tulang dengan rangka dudukan baja museum setinggi 4 meter.'],
+      ['Patung Perunggu Monumental Kinetik "Infinity"', 'Seni & Koleksi Langka', 42000000000, 'Geneva Contemporary Gallery', 'Mall', 5.0, 2, 'Karya seni instalasi luar ruangan setinggi 5 meter dari perunggu cor padat berlapis patina emas 24 karat.'],
+      ['Meteorit Bulan NWA 12691 (Berat 13,5 Kilogram)', 'Seni & Koleksi Langka', 38000000000, 'Cosmic Relics Archive', 'VVIP', 5.0, 1, 'Batuan asli permukaan Bulan yang jatuh ke Gurun Sahara dengan sertifikat analisis isotop laboratorium meteorit.'],
+      ['Koin Emas Kuno Kekaisaran Romawi Aureus (44 SM)', 'Seni & Koleksi Langka', 12500000000, 'Numismatic Heritage Vault', 'Mall', 5.0, 3, 'Koin emas murni bersejarah dalam kondisi Mint State tersegel dalam kapsul pelindung NGC bersertifikat.'],
+      ['Anggur Langka Romanée-Conti Grand Cru 1945 (1 Botol)', 'Seni & Koleksi Langka', 8800000000, 'Bordeaux & Burgundy Cellar', 'VVIP', 5.0, 2, 'Botol anggur koleksi paling legendaris di dunia yang disimpan dalam ruang bawah tanah bersuhu terkendali sejak 1945.'],
+      ['Single Malt Whisky The Macallan 1926 Fine & Rare', 'Seni & Koleksi Langka', 34000000000, 'Highland Rare Casks', 'VVIP', 5.0, 1, 'Dimatangkan selama 60 tahun dalam tong kayu ek Eropa sherry-seasoned dengan label edisi kolektor terverifikasi.'],
+      ['Karcis Penerbangan Wisata Sub-Orbital Luar Angkasa (2 Kursi)', 'Seni & Koleksi Langka', 14000000000, 'Aurelia Space Voyages', 'VVIP', 5.0, 5, 'Pengalaman melintasi garis Kármán 100 km di atas Bumi dan merasakan gravitasi nol selama beberapa menit.'],
+      ['Kopi Luwak Liar Gayo Reserve Peaberry (500 Gram)', 'Seni & Koleksi Langka', 3800000, 'Nusantara Heritage Roastery', 'Official Store', 4.9, 145, 'Biji kopi peaberry tunggal panen terbatas dari dataran tinggi Gayo dengan kemasan kaleng kedap udara berlapis kuningan.'],
+      ['Buku Sejarah Seni Renaisans Edisi Terbatas Kulit Asli', 'Seni & Koleksi Langka', 18500000, 'Aurelia Rare Books', 'Official Store', 4.9, 34, 'Cetakan berpenomoran tangan dengan kertas katun arsip, tepian daun emas, dan kotak penyimpan kain linen.'],
+      ['Sarung Tangan Inspeksi Koleksi Katun Arsip', 'Seni & Koleksi Langka', 75000, 'Aurelia Museum Supplies', 'Official Store', 4.8, 720, 'Sarung tangan katun putih 100% bebas serat untuk memegang karya seni, koin langka, dan buku kuno dengan aman.'],
+
+      // 79-90: Fashion Haute Couture (12 produk)
+      ['Tas Hermès Himalaya Niloticus Crocodile Birkin 30', 'Fashion Haute Couture', 6900000000, 'Aurelia Couture Vault', 'VVIP', 5.0, 3, 'Kulit buaya Niloticus gradasi putih-abu pegunungan Himalaya dengan perangkat keras emas putih 18k bertatahkan berlian.'],
+      ['Tas Hermès Kelly 28 Sellier Black Porosus Crocodile', 'Fashion Haute Couture', 1450000000, 'Aurelia Couture Vault', 'Mall', 5.0, 8, 'Kulit buaya Porosus mengilap dengan jahitan tangan pelana khas Prancis dan gembok berlapis paladium.'],
+      ['Setelan Jas Bespoke Vicuña & Benang Emas 24k', 'Fashion Haute Couture', 850000000, 'Savile Row Bespoke London', 'VVIP', 5.0, 6, 'Ditenun dari serat wol Vicuña Andes terhalus di dunia dipadukan garis benang emas 24 karat dengan pengukuran personal.'],
+      ['Gaun Malam Haute Couture Paris Sutra & Kristal', 'Fashion Haute Couture', 620000000, 'Maison Couture Paris', 'Mall', 5.0, 4, 'Dikerjakan selama 800 jam oleh pengrajin atelier Paris dengan sulaman ribuan payet kristal dan sutra murni.'],
+      ['Jaket Kulit Buaya Asli Loro Piana Cashmere Lining', 'Fashion Haute Couture', 480000000, 'Milan Luxury Menswear', 'Official Store', 4.9, 11, 'Jaket bomber kulit buaya lembut berpori halus dengan lapisan dalam 100% kasmir bayi dari Mongolia.'],
+      ['Sepatu Oxford Kulit Berluti Venezia Patina Tangan', 'Fashion Haute Couture', 54000000, 'Parisian Bespoke Shoes', 'Official Store', 4.9, 37, 'Sepatu kulit satu potong (wholecut) dengan pewarnaan patina manual oleh seniman sepatu Paris.'],
+      ['Kacamata Hitam Maybach The King III Solid Gold', 'Fashion Haute Couture', 420000000, 'Maybach Icons of Luxury', 'Mall', 5.0, 9, 'Bingkai emas padat 18 karat bertatahkan berlian alami dengan gagang tanduk kerbau asli buatan tangan di Jerman.'],
+      ['Koper Kabin Rimowa Classic Titanium & Kulit', 'Fashion Haute Couture', 38500000, 'Rimowa Cologne Official', 'Official Store', 4.9, 84, 'Koper aluminium anodized ikonik dengan gagang kulit buatan tangan dan sistem roda Multiwheel presisi.'],
+      ['Syal Kasmir Murni 100% Pashmina Ladakh Royal', 'Fashion Haute Couture', 28000000, 'Aurelia Cashmere House', 'Official Store', 4.9, 52, 'Tenunan tangan tradisional super ringan dan hangat dengan motif bordir halus bernilai warisan tinggi.'],
+      ['Sabuk Kulit Alligator Gesper Platinum PVD', 'Fashion Haute Couture', 42000000, 'Aurelia Leather Goods', 'Official Store', 4.8, 63, 'Sabuk kulit buaya dua sisi buatan Italia dengan gesper logam mulia tahan gores.'],
+      ['Dompet Kartu Kulit Anak Sapi Togo Minimalis', 'Fashion Haute Couture', 14500000, 'Aurelia Leather Goods', 'Official Store', 4.9, 118, 'Dompet kartu ramping dengan 6 slot kartu dan jahitan benang linen berlapis lilin anti-air.'],
+      ['Kaos Kaki Sutra & Katun Mesir Mercerized', 'Fashion Haute Couture', 650000, 'Aurelia Sartorial Essentials', 'Official Store', 4.8, 430, 'Kaos kaki dress nyaman dengan rajutan tanpa jahitan ujung jari dari kombinasi sutra murni dan katun Mesir.'],
+
+      // 91-100: Mainan & Hobi Sultan (10 produk)
+      ['Mobil Listrik Anak Bugatti Baby II Carbon Edition', 'Mainan & Hobi Sultan', 1450000000, 'The Little Car Company', 'Mall', 5.0, 7, 'Replika skala 75% dari Bugatti Type 35 berlisensi resmi dengan bodi serat karbon penuh, kecepatan hingga 70 km/jam.'],
+      ['Meja Biliar Kaca & Titanium Teckell Cristallino', 'Mainan & Hobi Sultan', 1150000000, 'Teckell Italy Design', 'VVIP', 5.0, 5, 'Meja biliar kristal temper tebal 15 mm buatan Italia dengan kaki baja tahan karat berlapis emas dan kain Simonis.'],
+      ['Catur Mewah Emas & Platinum "Royal Sovereign"', 'Mainan & Hobi Sultan', 3200000000, 'Aurelia Bespoke Games', 'VVIP', 5.0, 3, 'Papan catur marmer Nero Marquina dan Onyx putih dengan 32 bidak pahatan tangan emas 18k dan platinum bertatahkan berlian.'],
+      ['Simulator Balap F1 Full-Motion Pro Hydraulic', 'Mainan & Hobi Sultan', 2400000000, 'Vesaro & Aurelia Sim', 'Mall', 5.0, 8, 'Kokpit monokok serat karbon dengan aktuator gerak D-BOX 6-axis, tiga layar melengkung 65 inci, dan setir F1 asli.'],
+      ['Set Stik Golf Emas 24k Honma Beres 5-Star Full Set', 'Mainan & Hobi Sultan', 980000000, 'Honma Golf Sakata Japan', 'Official Store', 5.0, 12, 'Dirakit oleh pengrajin Takumi di Jepang dengan cincin emas 24 karat, platinum, dan poros ARMRQ berkinerja tinggi.'],
+      ['Diecast Amalgam Bugatti Chiron 1:8 Skala Museum', 'Mainan & Hobi Sultan', 265000000, 'Amalgam Collection UK', 'Official Store', 5.0, 19, 'Model skala 1:8 dibuat tangan selama 450 jam menggunakan data CAD asli pabrik Bugatti dengan detail interior identik.'],
+      ['Meja Tenis Meja Kaca Kristal & Kayu Kenari', 'Mainan & Hobi Sultan', 480000000, 'Aurelia Leisure Craft', 'Mall', 4.9, 10, 'Meja pingpong desain arsitektural dengan permukaan kaca anti-silau pantulan standar turnamen dan jaring kulit asli.'],
+      ['Drone Sinema Profesional DJI Inspire 3 Full Kit', 'Mainan & Hobi Sultan', 285000000, 'DJI Enterprise Official', 'Official Store', 4.9, 36, 'Drone sinematografi 8K Full-Frame dengan kamera Zenmuse X9-Air, navigasi RTK sentimeter, dan dual remote controller.'],
+      ['Sepeda Balap Roadbike Colnago C68 Titanium Gold', 'Mainan & Hobi Sultan', 340000000, 'Colnago Cambiago Italy', 'Official Store', 5.0, 15, 'Rangka serat karbon modular buatan tangan di Italia dengan sambungan titanium cetak 3D berlapis emas dan groupset Campagnolo.'],
+      ['Kartu Remi Kolektor Berlapis Foil Emas 24k', 'Mainan & Hobi Sultan', 185000, 'Aurelia Leisure Craft', 'Official Store', 4.8, 940, 'Satu dek kartu remi tahan air bertekstur emboss dengan kilau foil emas 24k dalam kotak kayu hitam eksklusif.']
+    ];
+
+    // Susun array lengkap 100 produk terstruktur
+    const products = rawCatalogData.map((item, idx) => {
+      const [name, category, price, store, badge, rating, sold, description] = item;
+      const visual = categoryVisuals[category] || categoryVisuals['Otomotif & Supercar'];
+      return {
+        id: 'PRD-' + String(idx + 1).padStart(3, '0'),
+        name,
+        category,
+        price,
+        store,
+        badge,
+        rating,
+        sold,
+        description,
+        gradient: visual.gradient,
+        svgIcon: visual.svg
+      };
+    });
+
+    const categories = [
+      'Semua',
+      'Otomotif & Supercar',
+      'Properti & Pulau Pribadi',
+      'Jam Tangan & Perhiasan',
+      'Gadget & Elektronik Eksklusif',
+      'Pesawat & Yacht',
+      'Seni & Koleksi Langka',
+      'Fashion Haute Couture',
+      'Mainan & Hobi Sultan'
+    ];
+
+    // ==================== CURRENCY FORMATTING ====================
+    function formatRupiah(amount) {
+      if (amount === 0) return 'Rp 0';
+      return 'Rp ' + Math.floor(amount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    function formatCompactRupiah(amount) {
+      if (amount === 0) return 'Rp 0';
+      if (amount >= 1000000000000) {
+        const t = amount / 1000000000000;
+        return 'Rp ' + (Number.isInteger(t) ? t : t.toFixed(2).replace(/\.?0+$/, '')) + ' Triliun';
+      }
+      if (amount >= 1000000000) {
+        const m = amount / 1000000000;
+        return 'Rp ' + (Number.isInteger(m) ? m : m.toFixed(2).replace(/\.?0+$/, '')) + ' Miliar';
+      }
+      if (amount >= 1000000) {
+        const jt = amount / 1000000;
+        return 'Rp ' + (Number.isInteger(jt) ? jt : jt.toFixed(2).replace(/\.?0+$/, '')) + ' Juta';
+      }
+      if (amount >= 1000) {
+        const rb = amount / 1000;
+        return 'Rp ' + (Number.isInteger(rb) ? rb : rb.toFixed(1).replace(/\.0$/, '')) + ' Rb';
+      }
+      return formatRupiah(amount);
+    }
+
+    // ==================== UI & WALLET UPDATES ====================
+    function updateWalletUI() {
+      const fullFormatted = formatRupiah(walletBalance);
+      const compactFormatted = formatCompactRupiah(walletBalance);
+
+      document.getElementById('walletBalanceDisplay').textContent = fullFormatted;
+      document.getElementById('shortBalanceBadge').textContent = compactFormatted;
+      document.getElementById('modalCurrentBalance').textContent = fullFormatted;
+
+      const orderBadge = document.getElementById('orderCountBadge');
+      if (orders.length > 0) {
+        orderBadge.textContent = orders.length;
+        orderBadge.classList.remove('hidden');
+      } else {
+        orderBadge.classList.add('hidden');
+      }
+    }
+
+    function showToast(title, message) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMessage').textContent = message;
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3400);
+    }
+
+    // ==================== CATEGORY & PRODUCT RENDERING ====================
+    function renderCategories() {
+      const container = document.getElementById('categoryContainer');
+      container.innerHTML = categories.map(cat => {
+        const count = cat === 'Semua' ? products.length : products.filter(p => p.category === cat).length;
+        const isActive = activeCategory === cat;
+        return `
+          <button 
+            onclick="selectCategory('${cat}')"
+            class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 ${
+              isActive 
+                ? 'bg-slate-100 text-slate-950 shadow-md' 
+                : 'bg-[#13161F] text-slate-300 hover:bg-white/10 border border-white/10'
+            }"
+          >
+            <span>${cat}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-slate-950/15 text-slate-900' : 'bg-white/5 text-slate-400'}">${count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectCategory(cat) {
+      activeCategory = cat;
+      renderCategories();
+      renderProducts();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+      renderProducts();
+    }
+
+    function handleSort() {
+      sortMode = document.getElementById('sortSelect').value;
+      renderProducts();
+    }
+
+    function resetFilters() {
+      activeCategory = 'Semua';
+      searchQuery = '';
+      sortMode = 'default';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('sortSelect').value = 'default';
+      renderCategories();
+      renderProducts();
+    }
+
+    function renderProducts() {
+      let filtered = products.filter(p => {
+        const matchesCat = activeCategory === 'Semua' || p.category === activeCategory;
+        const matchesSearch = !searchQuery || 
+          p.name.toLowerCase().includes(searchQuery) || 
+          p.category.toLowerCase().includes(searchQuery) ||
+          p.store.toLowerCase().includes(searchQuery);
+        return matchesCat && matchesSearch;
+      });
+
+      if (sortMode === 'price-asc') {
+        filtered = [...filtered].sort((a, b) => a.price - b.price);
+      } else if (sortMode === 'price-desc') {
+        filtered = [...filtered].sort((a, b) => b.price - a.price);
+      } else if (sortMode === 'sold-desc') {
+        filtered = [...filtered].sort((a, b) => b.sold - a.sold);
+      }
+
+      const grid = document.getElementById('productGrid');
+      const emptyState = document.getElementById('emptyState');
+      const counter = document.getElementById('productCounter');
+
+      counter.textContent = `Menampilkan ${filtered.length} dari ${products.length} produk eksklusif`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = filtered.map(product => {
+        const badgeStyle = product.badge === 'VVIP' 
+          ? 'bg-amber-400/15 text-amber-300 border-amber-400/30' 
+          : product.badge === 'Mall'
+          ? 'bg-white/15 text-white border-white/25'
+          : 'bg-emerald-400/15 text-emerald-300 border-emerald-400/30';
+
+        return `
+          <div class="group bg-[#11131A] border border-white/10 hover:border-white/25 rounded-2xl overflow-hidden flex flex-col justify-between transition duration-300 hover:-translate-y-1 shadow-lg">
+            
+            <!-- Card Visual Header -->
+            <div>
+              <div class="relative h-44 bg-gradient-to-br ${product.gradient} p-5 flex flex-col justify-between overflow-hidden border-b border-white/5">
+                <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-white/[0.03] group-hover:scale-125 transition duration-500"></div>
+                
+                <div class="flex items-center justify-between gap-2 relative z-10">
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border ${badgeStyle}">
+                    ${product.badge}
+                  </span>
+                  <span class="text-[10px] font-mono text-slate-400 bg-black/40 px-2 py-0.5 rounded border border-white/5">
+                    ${product.id}
+                  </span>
+                </div>
+
+                <div class="my-auto flex items-center justify-center relative z-10 group-hover:scale-105 transition duration-300">
+                  ${product.svgIcon}
+                </div>
+
+                <div class="flex items-center justify-between text-[10px] text-slate-400 relative z-10">
+                  <span class="truncate max-w-[65%]">${product.category}</span>
+                  <span class="font-semibold text-slate-200">${formatCompactRupiah(product.price)}</span>
+                </div>
+              </div>
+
+              <!-- Card Content -->
+              <div class="p-4 space-y-2">
+                <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
+                  <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="truncate">${product.store}</span>
+                </div>
+
+                <h3 class="text-sm font-bold text-white leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-slate-200 transition">
+                  ${product.name}
+                </h3>
+
+                <div class="pt-1">
+                  <p class="text-[10px] text-slate-500">Harga Resmi</p>
+                  <p class="text-sm font-extrabold text-white tracking-tight break-all">
+                    ${formatRupiah(product.price)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="px-4 pb-4 pt-2 space-y-3">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5 pt-2.5">
+                <div class="flex items-center gap-1">
+                  <span class="text-amber-400">★</span>
+                  <span class="text-slate-200 font-semibold">${product.rating.toFixed(1)}</span>
+                </div>
+                <span>Terjual ${product.sold}</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button 
+                  onclick="openCheckoutModal('${product.id}', 'detail')" 
+                  class="px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 text-xs font-semibold transition"
+                >
+                  Detail
+                </button>
+                <button 
+                  onclick="openCheckoutModal('${product.id}', 'buy')" 
+                  class="flex-1 py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-white active:scale-[0.99] text-slate-950 text-xs font-bold transition"
+                >
+                  Beli Sekarang
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==================== TOP UP MODAL LOGIC ====================
+    function renderTopUpNominals() {
+      const grid = document.getElementById('nominalGrid');
+      grid.innerHTML = topUpNominals.map(item => {
+        const isSelected = selectedTopUpAmount === item.value;
+        return `
+          <button 
+            type="button"
+            onclick="selectTopUpNominal(${item.value})"
+            class="text-left p-3 rounded-xl border transition flex flex-col justify-between ${
+              isSelected 
+                ? 'bg-white/15 border-slate-200 ring-1 ring-slate-200' 
+                : 'bg-[#161923] border-white/10 hover:border-white/25'
+            }"
+          >
+            <div class="flex items-center justify-between gap-1 mb-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider ${isSelected ? 'text-white' : 'text-slate-400'}">
+                ${item.tag}
+              </span>
+              <span class="text-[10px] text-emerald-400 font-medium">Instan</span>
+            </div>
+            <span class="text-xs font-bold text-white break-all leading-tight">
+              ${item.label}
+            </span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectTopUpNominal(val) {
+      selectedTopUpAmount = val;
+      renderTopUpNominals();
+      document.getElementById('selectedTopUpDisplay').textContent = formatRupiah(val);
+      const btn = document.getElementById('confirmTopUpBtn');
+      const btnText = document.getElementById('topUpBtnText');
+      btn.disabled = false;
+      btnText.textContent = `Konfirmasi Transfer & Tambah Saldo (${formatCompactRupiah(val)})`;
+    }
+
+    function openTopUpModal(recommendedShortfall = 0) {
+      selectedTopUpAmount = 0;
+      document.getElementById('selectedTopUpDisplay').textContent = 'Rp 0';
+      const btn = document.getElementById('confirmTopUpBtn');
+      btn.disabled = true;
+      document.getElementById('topUpBtnText').textContent = 'Pilih Nominal Terlebih Dahulu';
+      document.getElementById('modalCurrentBalance').textContent = formatRupiah(walletBalance);
+
+      const recBox = document.getElementById('topUpRecommendationBox');
+      if (recommendedShortfall > 0) {
+        const bestMatch = topUpNominals.find(n => n.value >= recommendedShortfall) || topUpNominals[topUpNominals.length - 1];
+        recBox.classList.remove('hidden');
+        document.getElementById('topUpRecommendationText').textContent = `Kekurangan saldo: ${formatRupiah(recommendedShortfall)} • Disarankan: ${bestMatch.tag}`;
+        document.getElementById('applyRecommendedTopUpBtn').onclick = () => selectTopUpNominal(bestMatch.value);
+      } else {
+        recBox.classList.add('hidden');
+      }
+
+      renderTopUpNominals();
+      const modal = document.getElementById('topUpModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeTopUpModal() {
+      const modal = document.getElementById('topUpModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function executeTopUp() {
+      if (selectedTopUpAmount <= 0) return;
+
+      const btn = document.getElementById('confirmTopUpBtn');
+      const btnText = document.getElementById('topUpBtnText');
+      btn.disabled = true;
+      btnText.textContent = 'Memverifikasi Kliring Bank...';
+
+      setTimeout(() => {
+        const added = selectedTopUpAmount;
+        walletBalance += added;
+        updateWalletUI();
+        closeTopUpModal();
+        showToast('Top Up VeloPay Berhasil', `+${formatRupiah(added)} telah masuk ke saldo Anda.`);
+
+        if (currentCheckoutProduct) {
+          openCheckoutModal(currentCheckoutProduct.id, 'buy');
+        }
+      }, 650);
+    }
+
+    // ==================== CHECKOUT & PURCHASE FLOW ====================
+    function selectSavedAddress(addrId) {
+      selectedAddressId = addrId;
+      if (currentCheckoutProduct) {
+        openCheckoutModal(currentCheckoutProduct.id, 'buy');
+      }
+    }
+
+    function toggleNewAddressForm() {
+      showNewAddressForm = !showNewAddressForm;
+      if (currentCheckoutProduct) {
+        openCheckoutModal(currentCheckoutProduct.id, 'buy');
+      }
+    }
+
+    function saveNewAddress(event) {
+      event.preventDefault();
+      const label = document.getElementById('newAddrLabel').value.trim();
+      const recipient = document.getElementById('newAddrRecipient').value.trim();
+      const phone = document.getElementById('newAddrPhone').value.trim();
+      const detail = document.getElementById('newAddrDetail').value.trim();
+
+      if (!label || !recipient || !phone || !detail) return;
+
+      const newId = 'ADDR-' + String(savedAddresses.length + 1).padStart(2, '0');
+      savedAddresses.unshift({
+        id: newId,
+        label,
+        recipient,
+        phone,
+        detail,
+        maskedRegion: 'Indonesia ****************'
+      });
+
+      selectedAddressId = newId;
+      showNewAddressForm = false;
+      showToast('Alamat Tersimpan', 'Alamat pengiriman baru berhasil dipilih.');
+      if (currentCheckoutProduct) {
+        openCheckoutModal(currentCheckoutProduct.id, 'buy');
+      }
+    }
+
+    function openCheckoutModal(productId, mode = 'buy') {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      currentCheckoutProduct = product;
+
+      const isEnough = walletBalance >= product.price;
+      const shortfall = product.price - walletBalance;
+
+      const body = document.getElementById('checkoutBody');
+      body.innerHTML = `
+        <!-- Product Summary Card -->
+        <div class="flex items-start gap-4 p-4 rounded-xl bg-[#161923] border border-white/10">
+          <div class="w-16 h-16 rounded-xl bg-gradient-to-br ${product.gradient} flex items-center justify-center shrink-0 border border-white/10">
+            <div class="scale-50">${product.svgIcon}</div>
+          </div>
+          <div class="min-w-0 flex-1">
+            <span class="text-[10px] font-bold uppercase text-slate-400">${product.store}</span>
+            <h4 class="text-sm font-bold text-white leading-snug mt-0.5">${product.name}</h4>
+            <p class="text-sm font-extrabold text-white mt-1.5 break-all">${formatRupiah(product.price)}</p>
+          </div>
+        </div>
+
+        <!-- Product Description -->
+        <div class="p-3.5 rounded-xl bg-[#141720] border border-white/10 space-y-1.5">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Spesifikasi & Sertifikasi</p>
+          <p class="text-xs text-slate-300 leading-relaxed">${product.description}</p>
+        </div>
+
+        <!-- Saved Shipping Address Selection -->
+        <div class="p-3.5 rounded-xl bg-[#141720] border border-white/10 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Pilih Alamat Tersimpan</span>
+            <button type="button" onclick="toggleNewAddressForm()" class="text-[11px] font-semibold text-slate-200 hover:text-white underline underline-offset-2 transition">
+              ${showNewAddressForm ? 'Batal' : '+ Tambah Alamat Baru'}
+            </button>
+          </div>
+
+          ${showNewAddressForm ? `
+            <form onsubmit="saveNewAddress(event)" class="p-3 rounded-xl bg-[#11131A] border border-white/20 space-y-2.5 text-xs">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <input id="newAddrLabel" type="text" required placeholder="Label (cth: Vila Bali)" class="bg-[#161923] border border-white/15 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-slate-300" />
+                <input id="newAddrRecipient" type="text" required placeholder="Nama Penerima" class="bg-[#161923] border border-white/15 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-slate-300" />
+              </div>
+              <input id="newAddrPhone" type="text" required placeholder="Nomor Telepon (+62...)" class="w-full bg-[#161923] border border-white/15 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-slate-300" />
+              <textarea id="newAddrDetail" rows="2" required placeholder="Alamat Lengkap Jalan, Gedung, Kota" class="w-full bg-[#161923] border border-white/15 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-slate-300"></textarea>
+              <button type="submit" class="w-full py-2 rounded-lg bg-slate-100 hover:bg-white text-slate-950 font-bold text-xs transition">
+                Simpan & Gunakan Alamat
+              </button>
+            </form>
+          ` : ''}
+
+          <div class="space-y-2 max-h-44 overflow-y-auto pr-1">
+            ${savedAddresses.map(addr => {
+              const isSelected = addr.id === selectedAddressId;
+              return `
+                <div 
+                  onclick="selectSavedAddress('${addr.id}')"
+                  class="cursor-pointer p-3 rounded-xl border transition flex items-start gap-3 ${
+                    isSelected 
+                      ? 'bg-white/10 border-slate-200' 
+                      : 'bg-[#11131A] border-white/10 hover:border-white/25'
+                  }"
+                >
+                  <div class="mt-0.5 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
+                    isSelected ? 'border-white' : 'border-slate-600'
+                  }">
+                    ${isSelected ? '<div class="w-2 h-2 rounded-full bg-white"></div>' : ''}
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[11px] font-bold text-white">${addr.label}</span>
+                      <span class="text-[10px] text-emerald-400 font-medium">Asuransi Penuh</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-200 mt-0.5">${addr.recipient} <span class="text-slate-400 font-normal">(${addr.phone})</span></p>
+                    <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">${addr.detail}</p>
+                    <p class="text-[10px] font-mono text-slate-300 mt-1">${addr.maskedRegion}</p>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- Payment Breakdown -->
+        <div class="p-4 rounded-xl bg-[#161923] border ${isEnough ? 'border-white/10' : 'border-rose-500/50'} space-y-2.5 text-xs">
+          <div class="flex justify-between text-slate-400">
+            <span>Harga Aset / Produk</span>
+            <span class="text-white font-semibold">${formatRupiah(product.price)}</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>Pengiriman & Pengawalan Prioritas</span>
+            <span class="text-emerald-400 font-semibold">Rp 0 (VVIP Tier)</span>
+          </div>
+          <div class="border-t border-white/10 pt-2.5 flex justify-between items-center">
+            <span class="text-slate-300 font-semibold">Saldo VeloPay Anda</span>
+            <span class="font-bold ${isEnough ? 'text-emerald-400' : 'text-rose-400'}">${formatRupiah(walletBalance)}</span>
+          </div>
+          ${!isEnough ? `
+            <div class="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300 text-[11px]">
+              Saldo VeloPay Anda tidak mencukupi. Kurang <strong>${formatRupiah(shortfall)}</strong> untuk menyelesaikan transaksi ini.
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      const footer = document.getElementById('checkoutFooter');
+      if (isEnough) {
+        footer.innerHTML = `
+          <div class="flex items-center gap-3">
+            <button onclick="closeCheckoutModal()" class="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs transition">
+              Batal
+            </button>
+            <button id="payNowBtn" onclick="processPurchase()" class="flex-1 py-3 px-5 rounded-xl bg-slate-100 hover:bg-white text-slate-950 font-bold text-xs shadow-lg transition">
+              Bayar Sekarang dengan VeloPay
+            </button>
+          </div>
+        `;
+      } else {
+        footer.innerHTML = `
+          <div class="flex items-center gap-3">
+            <button onclick="closeCheckoutModal()" class="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs transition">
+              Tutup
+            </button>
+            <button onclick="closeCheckoutModal(); openTopUpModal(${shortfall});" class="flex-1 py-3 px-5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs shadow-lg transition">
+              Top Up Saldo Sekarang
+            </button>
+          </div>
+        `;
+      }
+
+      const modal = document.getElementById('checkoutModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCheckoutModal() {
+      const modal = document.getElementById('checkoutModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function processPurchase() {
+      if (!currentCheckoutProduct) return;
+      const product = currentCheckoutProduct;
+      if (walletBalance < product.price) return;
+
+      const btn = document.getElementById('payNowBtn');
+      btn.disabled = true;
+      btn.textContent = 'Memproses Otorisasi Escrow...';
+
+      setTimeout(() => {
+        walletBalance -= product.price;
+        updateWalletUI();
+
+        const chosenAddress = savedAddresses.find(a => a.id === selectedAddressId) || savedAddresses[0];
+        const invoiceNo = 'INV/' + new Date().getFullYear() + '/AUR/' + Math.floor(100000 + Math.random() * 900000);
+        const timestamp = new Date().toLocaleString('id-ID', {
+          day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+
+        const orderRecord = {
+          invoiceNo,
+          timestamp,
+          product,
+          shippingAddress: chosenAddress,
+          totalPaid: product.price,
+          status: 'Terverifikasi & Dalam Pengiriman VVIP'
+        };
+        orders.unshift(orderRecord);
+        updateWalletUI();
+
+        currentCheckoutProduct = null;
+        closeCheckoutModal();
+        showReceiptModal(orderRecord);
+      }, 750);
+    }
+
+    // ==================== RECEIPT & ORDERS MODAL ====================
+    function showReceiptModal(order) {
+      const body = document.getElementById('receiptBody');
+      body.innerHTML = `
+        <div class="flex justify-between py-1.5 border-b border-white/10">
+          <span class="text-slate-400">ID Transaksi / Invoice</span>
+          <span class="font-mono font-bold text-white">${order.invoiceNo}</span>
+        </div>
+        <div class="flex justify-between py-1.5 border-b border-white/10">
+          <span class="text-slate-400">Waktu Transaksi</span>
+          <span class="text-slate-200">${order.timestamp} WIB</span>
+        </div>
+        <div class="flex justify-between py-1.5 border-b border-white/10">
+          <span class="text-slate-400">Metode Pembayaran</span>
+          <span class="text-white font-semibold">VeloPay Priority</span>
+        </div>
+        <div class="py-2 border-b border-white/10 space-y-1">
+          <span class="text-slate-400 block">Item Dibeli</span>
+          <span class="text-white font-bold block leading-snug">${order.product.name}</span>
+        </div>
+        <div class="py-2.5 border-b border-white/10 space-y-1 bg-[#161923] px-3 rounded-lg">
+          <span class="text-[10px] uppercase tracking-wider font-semibold text-slate-400 block">Alamat Pengiriman</span>
+          <span class="text-white font-semibold block">${order.shippingAddress.recipient} • ${order.shippingAddress.label}</span>
+          <span class="text-slate-300 block text-[11px]">${order.shippingAddress.detail}</span>
+          <span class="font-mono text-emerald-400 font-bold block text-[11px] pt-0.5">${order.shippingAddress.maskedRegion}</span>
+        </div>
+        <div class="flex justify-between py-1.5 border-b border-white/10">
+          <span class="text-slate-400">Total Dibayar</span>
+          <span class="text-emerald-400 font-extrabold text-sm">${formatRupiah(order.totalPaid)}</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span class="text-slate-400">Sisa Saldo VeloPay</span>
+          <span class="text-white font-semibold">${formatRupiah(walletBalance)}</span>
+        </div>
+      `;
+
+      const modal = document.getElementById('receiptModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeReceiptModal() {
+      const modal = document.getElementById('receiptModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openOrdersModal() {
+      const container = document.getElementById('ordersListContainer');
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12">
+            <p class="text-sm font-semibold text-slate-300">Belum ada riwayat pesanan</p>
+            <p class="text-xs text-slate-500 mt-1">Aset dan barang mewah yang Anda beli akan tercatat resmi di sini.</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = orders.map(o => `
+          <div class="p-4 rounded-xl bg-[#161923] border border-white/10 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[11px] font-mono font-bold text-white">${o.invoiceNo}</span>
+                <span class="text-[10px] text-slate-500">• ${o.timestamp}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
+                ${o.status}
+              </span>
+            </div>
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold text-white">${o.product.name}</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">${o.product.store}</p>
+              </div>
+              <div class="text-right shrink-0">
+                <p class="text-[10px] text-slate-400">Total Bayar</p>
+                <p class="text-xs font-extrabold text-white">${formatRupiah(o.totalPaid)}</p>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px]">
+              <span class="text-slate-400">Tujuan: <strong class="text-slate-200">${o.shippingAddress.recipient}</strong> • ${o.shippingAddress.label}</span>
+              <span class="font-mono text-emerald-400 font-semibold text-[10px]">${o.shippingAddress.maskedRegion}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const modal = document.getElementById('ordersModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeOrdersModal() {
+      const modal = document.getElementById('ordersModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // ==================== INITIALIZATION ====================
+    window.onload = function() {
+      updateWalletUI();
+      renderCategories();
+      renderProducts();
+    };
+  </script>
+</body>
+</html>
